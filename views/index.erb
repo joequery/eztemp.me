@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>The weather for <%= @geodata['city']%>, <%= @geodata['region_name']%></title>
+    </head>
+
+    <body>
+
+        <h1>The weather for <%= @geodata['city']%>, <%= @geodata['region_name']%></h1>
+        <p>Today is <%= @weather[:currently][:date_str] %></p>
+
+        <h2>Currently</h2>
+        <p><%= @weather[:currently][:summary] %></p>
+        <ul>
+            <li>Temperature: <%= @weather[:currently][:temp] %>&deg;F
+            (Feels like <%= @weather[:currently][:temp_feels_like] %>&deg;F)</li>
+            <li>Chance of rain: <%= @weather[:currently][:precip_prob] %></li>
+            <li>Precipitation level: <%= @weather[:currently][:precip_intensity] %></li>
+        </ul>
+
+        <h2>Forecast</h2>
+        <p><%= @weather[:forecast][:summary] %></p>
+
+        <% for @day in @weather[:forecast][:days] %>
+            <h3><%= @day[:date_str] %></h3>
+            <p><%= @day[:summary] %></p>
+            <ul>
+                <li>Low: <%= @day[:min_temp] %>&deg;F</li>
+                <li>High: <%= @day[:max_temp] %>&deg;F</li>
+                <li>Chance of rain: <%= @day[:precip_prob] %></li>
+                <li>Precipitation level: <%= @day[:precip_intensity] %></li>
+            </ul>
+        <% end %>
+
+    </body>
+
+</html>
