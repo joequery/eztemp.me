@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>The weather for <%= @geodata['city']%>, <%= @geodata['region_name']%></title>
+        <title>The weather for <%= @geodata['location_str']%></title>
     </head>
 
     <body>
 
-        <h1>The weather for <%= @geodata['city']%>, <%= @geodata['region_name']%></h1>
-        <p>Today is <%= @weather[:currently][:date_str] %></p>
+        <h1>The weather for <%= @geodata['location_str']%></h1>
+
+        <% if @loc_str.nil? %>
+            <p>This location is an estimate based on your IP address. Use the form below if this is incorrect.</p>
+        <% end %>
+        <form method="get" action="/">
+            <label for="location">Enter your city,state:</label>
+            <input type="text" name="location" id="location">
+            <input type="submit" value="submit">
+        </form>
 
         <h2>Currently</h2>
+        <p>Today is <%= @weather[:currently][:date_str] %></p>
         <p><%= @weather[:currently][:summary] %></p>
         <ul>
             <li>Temperature: <%= @weather[:currently][:temp] %>&deg;F

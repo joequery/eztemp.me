@@ -12,7 +12,17 @@ if ENV['PRODUCTION'].nil?
 end
 
 get '/' do
-    @geodata = get_geo_from_ip(request.ip)
+    @loc_str = params[:location]
+    if @loc_str.nil?
+        @geodata = get_geo_from_ip(request.ip)
+    else
+        @geodata = get_geo_from_location_str(@loc_str)
+    end
+
+    if @geodata.nil?
+        return erb :notfound
+    end
+
     @weather = get_weather_from_latlong(@geodata['latitude'], @geodata['longitude'])
     erb :index
 end
